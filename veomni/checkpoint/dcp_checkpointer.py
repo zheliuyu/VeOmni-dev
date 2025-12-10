@@ -410,6 +410,9 @@ def dcp_to_torch_state_dict(
     state_dict: STATE_DICT_TYPE = {}
 
     # Filter to only load model weights if requested
+    # keys=["model"] will only load model state dict (excluding optimizer states)
+    # keys=None will load all keys from the checkpoint (model, optimizer, etc.)
+    # See _EmptyStateDictLoadPlanner._should_include_key() in torch's default_planner.py
     keys = ["model"] if model_only else None
 
     _load_state_dict(
